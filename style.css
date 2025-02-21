@@ -16,6 +16,7 @@ body{
     height: 20%;
 }
 .nav{
+    display: block;
     background-color: rgba(29,22,22,0.9);
     position: fixed;
     top: 10px;
@@ -30,6 +31,7 @@ body{
     border-radius: 40px;
     font-family: "lato";
     font-weight: 800;
+    z-index: 1;
 }
 .title{
     margin-left: 4%;
@@ -38,16 +40,115 @@ body{
     justify-self: center;
 }
 
-.main{
-    height: 50%;
-    background-color: #EEEEEE;
-}
+
 .git{
     position: absolute;
     color: white;
     right: 4%;
     font-size: 36px;
 }
+
+.heading{
+    margin-top: 100px;
+    font-size: 60px;
+    text-align: center;
+    color:  rgb(185, 4, 217);
+}
+
+.main{
+    
+}
+
+.data{
+    margin: 5% 10% 0% 10%;
+    background-color: #D84040;
+    height: 800px;
+    width: 80%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 8px;
+}
+.box1{
+    background-color: green;
+    grid-row: span 2;
+    grid-column: span 4;
+}
+.box2{
+    background-color: aqua;
+    grid-row: span 2;
+    grid-column: span 2;
+}
+.box3{
+    background-color: yellow;
+    grid-row: span 2;
+    grid-column: span 3;
+}
+.box4{
+    background-color: rgb(252, 252, 252);
+    grid-row: span 2;
+    grid-column: span 3;
+}
+.head2{
+    height:  60px;
+    background-color: #1D1616;
+}
+.main{
+    min-height: 20%;
+    background-color: #EEEEEE;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.spinner{
+    position: relative;
+    display: none;
+    line-height: 80px;
+    text-align: center;
+    margin-top: 15%;
+    height: 80px;
+    width: 80px;
+    border: 10px solid rgb(185, 4, 217);
+    border-color: rgb(185, 4, 217) transparent;
+    border-radius: 50%;
+    animation: spin 1.2s ease infinite;
+}
+.spinner:hover{
+    border-color:  #D84040 transparent;
+}
+input{
+    display: none;
+}
+
+
+
+@keyframes spin{
+    to {
+        transform: rotate(360deg);
+    }
+}
+label{
+    margin: 8%;
+    position: relative;
+    height: 60px;
+    width: 180px;
+    border-radius: 20px;
+    background-color: #0101ff;
+    line-height: 60px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+}
+label:hover{
+    background-color: #D84040;
+    cursor: pointer;
+}
+.foot{
+    height: 30%;
+}
+
 /*
 Colours:-
 Black:- #1D1616
