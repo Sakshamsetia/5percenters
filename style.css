@@ -55,9 +55,6 @@ body{
     color:  rgb(185, 4, 217);
 }
 
-.main{
-    
-}
 
 .data{
     margin: 5% 10% 0% 10%;
@@ -149,7 +146,33 @@ label:hover{
     height: 30%;
 }
 
-
+@media (max-width:600px){
+    .data{
+        width: 90%;
+        margin: 0% 5%;
+        margin-top: 40px;
+        min-height: 1000px;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 1fr ;
+        gap: 0px;
+    }
+    .box1{
+        grid-row: span 4;
+        grid-column: span 1;
+    }
+    .box2{
+        grid-column: span 1;
+        grid-row: span 2;
+    }
+    .box3{
+        grid-column: span 1;
+        grid-row: span 3;
+    }
+    .box4{
+        grid-column: span 1;
+        grid-row: span 3;
+    }
+}
 /*
 Colours:-
 Black:- #1D1616
