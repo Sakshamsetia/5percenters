@@ -6,8 +6,8 @@ function Upload(){
 
     const uploadedFile = fileInput1.files[0];
 
-    if (!uploadedFile.type.includes('video')) {
-        return alert("Only Videos allowed");
-    }
+    // if (!uploadedFile.type.includes('video')) {
+    //     return alert("Only Videos allowed");
+    // }
     document.getElementById("load").style.display="flex";
 }
