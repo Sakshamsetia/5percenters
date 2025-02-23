@@ -34,6 +34,7 @@ def getChunk(OUTPUT):
 # Rendering graph
 @app.route("/graph", methods=["GET", "POST"])
 def graph():
+    global OUTPUT_VIDEO
     # Saving file
     f = request.files.get("video")
     if not f:
