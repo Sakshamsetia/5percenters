@@ -8,17 +8,18 @@ def index():
 
 
 # add enctype="multipart/form-data" on form attribute
-@app.route("/result", method=["GET", "POST"])
+@app.route("/result")
 def result():
 
     # Getting file
     f = request.files["video"]
+    f.save("E:\\KrackHack\\")
 
-    # Giving request to model for data, and getting it as a dict
-    # TODO
+    # Running model function (TODO)
+    # Data is return value
     data = {}
     
     # returning JSON output (variable - data)
     dataJSON = jsonify(data)
-    render_template("result.html", data=data)
+    return dataJSON
 
