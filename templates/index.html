@@ -13,14 +13,27 @@
         <a class = "git" href="https://github.com/Sakshamsetia/5percenters">   
             <i class="fa-brands fa-github"></i>
         </a>
+        <div class="dropdown">
+            <button class="dropbtn" id="dropmain"><i class="fa-brands fa-linkedin"></i></button>
+            <div class="dropdown-content">
+                <a class="drop" id = "b1" href="https://www.linkedin.com/in/saksham-setia-187281310/">Saksham setia</a>
+                <a class="drop" id = "b2" href="https://www.linkedin.com/in/kshitij-mudhya-50ab19216/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Kshitij Mudhya</a>
+                <a class="drop" id = "b3" href="https://www.linkedin.com/in/ayush-singh-8b9910313/">Ayush Singh</a>
+                <a class="drop" id = "b4" href="https://www.linkedin.com/in/ayush-kulshreshtha-94b1aa313/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">Ayush Kulshrestha</a>
+            </div>
+        </div>
     </div>
 
     <div class="heading">Traffic Perception </div>
     <div class="data">
-        <div class="box1"></div>
-        <div class="box2"></div>
-        <div class="box3"></div>
-        <div class="box4"></div>
+        <div class="box1">
+            <p id="pa">            
+                Our primary focus remains to be pedestrian safety and traffic violations in this project. Specifically, pedestrian warning system alongside traffic light jumping are important areas of focus, which have applications both in autonomous vehicles and automated law enforcement. The present systems rarely have little, if any deep learning integrations to catch violators and prevent harm to pedestrians. Our project aims to detect these facts in a fast, efficient, and effective manner. 
+            </p>
+        </div>
+        <div class="box2">
+            <img id="neuro" src="{{ url_for('static',filename="img1.jpg")}}">
+        </div>
     </div>
     <div class="head2"></div>
     <div class="main">
@@ -31,8 +44,40 @@
             <label for="video" id="label">Upload</label>
         </form>
     </div>
-    <div class="foot"></div>
     <script src="{{ url_for('static', filename='script.js')}}"> </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </body>
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section about">
+            <h2>About 5%ers</h2>
+            <p>
+                Our project, "Traffic Perception," focuses on pedestrian safety and traffic violations. 
+                Using deep learning models like YOLOv8 and OpenCV, we aim to enhance automated law enforcement 
+                and prevent road mishaps efficiently.
+            </p>
+        </div>
+
+        <div class="footer-section contact">
+            <h2>Contact Us</h2>
+            <p>Email: <a href="mailto:b24497@students.iitmandi.ac.in">Saksham Setia</a></p>
+            <p>Email: <a href="mailto:b24391@students.iitmandi.ac.in">Ayush Kulshrestha</a></p>
+            <p>Email: <a href="mailto:b24396@students.iitmandi.ac.in">Kshitij Mudhya</a></p>
+            <p>Email: <a href="mailto:b24392@students.iitmandi.ac.in">Ayush Singh</a></p>
+        </div>
+
+        <div class="footer-section links">
+            <h2>Quick Links</h2>
+            <ul>
+                <li><a href="https://github.com/Sakshamsetia/5percenters" target="_blank">GitHub Repository</a></li>
+                <li><a href="https://www.linkedin.com/in/saksham-setia-187281310/" target="_blank">LinkedIn</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2025 5%ers | All rights reserved.</p>
+    </div>
+</footer>
 </html>

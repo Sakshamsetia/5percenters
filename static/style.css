@@ -58,33 +58,35 @@ body{
 
 .data{
     margin: 5% 10% 0% 10%;
-    background-color: #D84040;
-    height: 800px;
+    height: 300px;
     width: 80%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
     gap: 8px;
+    font-size: 15px;
+
 }
 .box1{
-    background-color: green;
-    grid-row: span 2;
-    grid-column: span 4;
+    color: white;
+    grid-row: span 1;
+    grid-column: span 2;
+}
+#pa{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    font-size: 25px;
 }
 .box2{
     background-color: aqua;
-    grid-row: span 2;
-    grid-column: span 2;
+    grid-row: span 1;
+    grid-column: span 1;
 }
-.box3{
-    background-color: yellow;
-    grid-row: span 2;
-    grid-column: span 3;
-}
-.box4{
-    background-color: rgb(252, 252, 252);
-    grid-row: span 2;
-    grid-column: span 3;
+#neuro{
+    height: 100%;
+    width: 100%;
 }
 .head2{
     height:  60px;
@@ -129,19 +131,20 @@ input{
         transform: rotate(360deg);
     }
 }
-label{
-    margin: 8%;
-    position: relative;
-    height: 60px;
+label {
+    display: flex; /* Ensures proper centering */
+    align-items: center; 
+    justify-content: center;
+    margin: 8px; /* More predictable spacing */
+    height: 100px;
     width: 180px;
     border-radius: 20px;
     background-color: #0101ff;
-    line-height: 60px;
-    text-align: center;
     font-size: 20px;
     font-weight: 700;
     color: white;
 }
+
 label:hover{
     background-color: #D84040;
     cursor: pointer;
@@ -155,26 +158,18 @@ label:hover{
         width: 90%;
         margin: 0% 5%;
         margin-top: 40px;
-        min-height: 1000px;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        min-height: 600px;
+        grid-template-rows: 1fr 1fr 1fr ;
         grid-template-columns: 1fr ;
         gap: 0px;
     }
     .box1{
-        grid-row: span 4;
+        grid-row: span 2;
         grid-column: span 1;
     }
     .box2{
         grid-column: span 1;
-        grid-row: span 2;
-    }
-    .box3{
-        grid-column: span 1;
-        grid-row: span 3;
-    }
-    .box4{
-        grid-column: span 1;
-        grid-row: span 3;
+        grid-row: span 1;
     }
 }
 .video-container {
@@ -195,11 +190,109 @@ label:hover{
     height: 300px; /* Adjust the height */
     border: 2px solid #000; /* Optional: border for styling */
 }
+/* Dropdown Button */
+.dropbtn {
+    position: relative;
+    left: 80%;
+    background-color: #ffe5e5;
+    font-size: 35px;
+    color: rgb(0, 0, 0);
+    display: block;
+    border: none;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    
+}
 
-/*
-Colours:-
-Black:- #1D1616
-Red-2:- #8E1616
-Red-1:- #D84040
-White:- #EEEEEE
-*/
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    opacity: 0;
+    transform: translateY(-10px); /* Move it up slightly */
+  transition: opacity 0.3s ease, transform 0.3s ease; 
+  pointer-events: none;
+    position: absolute;
+  border-radius: 35px;
+  min-width:160px;
+  height: 320px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: white;
+
+}
+
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    opacity: 1; /* Fade in */
+  transform: translateY(0); /* Move it back to position */
+  pointer-events: auto; /* Allow interaction */
+}
+.drop{
+    text-decoration: none;
+    text-align: center;
+    height: 70px;
+    width: 100%;
+    color:white;
+    font-weight: 600;
+    border: 5px solid gray;
+    background-color: #181818;
+}
+.drop:hover{
+    background-color: #1d1616;
+}
+
+.footer {
+    background: #222;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 10px;
+}
+
+.footer-section {
+    flex: 1;
+    margin: 10px;
+}
+
+.footer-section h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-section p, .footer-section a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-section a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.footer-bottom {
+    margin-top: 10px;
+    border-top: 1px solid #444;
+    padding: 10px 0;
+}

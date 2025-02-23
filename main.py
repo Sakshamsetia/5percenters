@@ -5,8 +5,27 @@ import os
 import re
 import shutil
 
+def coincide(car_1,car_2,person_1,person_2):
+    car_min_x, car_max_x = min(car_1[0],car_2[0]), max(car_1[0],car_2[0])
+    person_min_x, person_max_x = min(person_1[0],person_2[0]), max(person_1[0],person_2[0])
+    car_min_y , car_max_y = min(car_1[1],car_2[1]), max(car_1[1],car_2[1])
+    person_min_y, person_max_y = min(person_1[1],person_2[1]), max(person_1[1],person_2[1])
+
+    if car_max_x < person_min_x or person_max_x < car_min_x:
+        return False
+
+    if car_max_y < person_min_y or person_max_y < car_min_y:
+        return False
+
+    return True
 
 def image(VIDEO_PATH):
+    
+    chair1 = None
+    chair2 = None
+    person1 = None
+    person2 = None
+
     flag = True
     timeFrame = []
     prev_sec = -0.1
@@ -36,14 +55,15 @@ def image(VIDEO_PATH):
     second_count = 0
     model = YOLO("yolov8n.pt")
     while True:
+        ped_vio = False
         ret, frame = cap.read()
         
         if not ret:
             break
         height, width = frame.shape[:2]
-        if height>720 or width > 720:
+        if height>=720 or width >= 1280:
             frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
-        if not (frame_number % 5 == 0):
+        if  True:
             
         # Load YOLOv8 model
             
@@ -53,28 +73,27 @@ def image(VIDEO_PATH):
                 for box in result.boxes:
                 # Boxes around images
                     confidence = box.conf[0]  
-                    if confidence >0.65:
-                        x1, y1, x2, y2 = map(int, box.xyxy[0])  
-                        cls = int(box.cls[0])  
-                        label = model.names[cls] 
+                    x1, y1, x2, y2 = map(int, box.xyxy[0])  
+                    cls = int(box.cls[0])  
+                    label = model.names[cls] 
+                    if label == "car":
+                            chair1 = (x1,y1)
+                            chair2 = (x2,y2)
+                    elif label == "person":
+                        person1 = (x1,y1)
+                        person2 = (x2,y2) 
+                        if chair2 is not None and chair1 is not None:    
+                            if coincide(chair1,chair2 ,person1 , person2  ):
+                                ped_vio = True
+                            else:
+                                ped_vio = False
+                        else:
+                            ped_vio = False
+                    if confidence >0.5:
+                        
                         cv2.rectangle(image_rgb, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                        cv2.putText(image_rgb, f'{label} {confidence:.2f}', (x1, y1 - 10),
+                        cv2.putText(image_rgb, f'{label}', (x1, y1 - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
-
-            #Image download
-        
-            image_bgr = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR) 
-            video_frame = image_bgr
-            if flag:
-                height, width, layers = frame.shape
-                flag = False            
-                fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Codec for AVI
-                fps = (fps)  # Frames per second
-                video = cv2.VideoWriter(video_name, fourcc, fps, (width, height))
-                video.write(video_frame)
-            else:
-                video.write(video_frame)
-                
             
             # Extract the first result
             result = results[0]
@@ -96,25 +115,43 @@ def image(VIDEO_PATH):
             final_dict = {}
             for i in detected_objects.keys():
                 for j in detected_objects[i]:
-                    if j>0.65:
+                    if j>0.75:
                         if i not in final_dict.keys():
                             final_dict[i] = 1
                         else:
                             final_dict[i] +=1
                         
-            
+            if ped_vio:
+                cv2.putText(image_rgb, f"!!! Pedestrian Alert !!!", (25, 70),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (57, 255, 20), 4)
             if "person" in final_dict and any(obj in final_dict for obj in ["car", "bus", "truck"]):
                 violation = True
+                
+                
             else:
                 violation = False
-            if ((frame_number/fps) - prev_sec)>= 0.1:
+            if ((frame_number/fps) - prev_sec)>= 0.3:
                 timeFrame.append({
                 "Time (s)": frame_number/fps,
                 "Pedestrians": final_dict.get("person", 0),
                 "Vehicles": sum(final_dict.get(obj, 0) for obj in ["car", "bus", "truck"]),
                 "Violation Detected?": violation
                 }) 
-                prev_sec = frame_number/fps     
+                prev_sec = frame_number/fps   
+            #Image download
+            
+            image_bgr = cv2.cvtColor(image_rgb, cv2.COLOR_RGB2BGR) 
+            video_frame = image_bgr
+            if flag:
+                height, width, layers = frame.shape
+                flag = False            
+                fourcc = cv2.VideoWriter_fourcc(*'mp4v')  # Codec for AVI
+                video = cv2.VideoWriter(video_name, fourcc, fps, (width, height))
+                video.write(video_frame)
+            else:
+                video.write(video_frame)
+                
+              
             second_count += 1
         
         frame_number += 1
@@ -144,7 +181,4 @@ def image(VIDEO_PATH):
     graph_path = "./static/graph.png"
     plt.savefig(graph_path, bbox_inches='tight', dpi=300)
     plt.close() 
-    
     return video_name
-
-
