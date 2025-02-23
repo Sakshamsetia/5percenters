@@ -177,6 +177,25 @@ label:hover{
         grid-row: span 3;
     }
 }
+.video-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px; /* Space between video and image */
+}
+
+#stream-video {
+    width: 500px;  /* Adjust the width */
+    height: 300px; /* Adjust the height */
+    border: 2px solid #000; /* Optional: border for styling */
+}
+
+#side-image {
+    width: 200px; /* Adjust the width */
+    height: 300px; /* Adjust the height */
+    border: 2px solid #000; /* Optional: border for styling */
+}
+
 /*
 Colours:-
 Black:- #1D1616

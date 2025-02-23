@@ -5,6 +5,7 @@ import os
 import re
 import shutil
 
+
 def image(VIDEO_PATH):
     flag = True
     timeFrame = []
@@ -33,30 +34,32 @@ def image(VIDEO_PATH):
 
     frame_number = 0
     second_count = 0
-
+    model = YOLO("yolov8n.pt")
     while True:
         ret, frame = cap.read()
         
         if not ret:
             break
-        
-        if True:
+        height, width = frame.shape[:2]
+        if height>720 or width > 720:
+            frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+        if not (frame_number % 5 == 0):
             
         # Load YOLOv8 model
-            model = YOLO("yolov8n.pt")
+            
             results = model.predict(frame)
             image_rgb = cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
             for result in results:
                 for box in result.boxes:
                 # Boxes around images
-                    x1, y1, x2, y2 = map(int, box.xyxy[0])  
                     confidence = box.conf[0]  
-                    cls = int(box.cls[0])  
-                    label = model.names[cls] 
-
-                    cv2.rectangle(image_rgb, (x1, y1), (x2, y2), (255, 0, 0), 2)
-                    cv2.putText(image_rgb, f'{label} {confidence:.2f}', (x1, y1 - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1.5, (255, 0, 0), 2)
+                    if confidence >0.65:
+                        x1, y1, x2, y2 = map(int, box.xyxy[0])  
+                        cls = int(box.cls[0])  
+                        label = model.names[cls] 
+                        cv2.rectangle(image_rgb, (x1, y1), (x2, y2), (255, 0, 0), 2)
+                        cv2.putText(image_rgb, f'{label} {confidence:.2f}', (x1, y1 - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
 
             #Image download
         
@@ -93,7 +96,7 @@ def image(VIDEO_PATH):
             final_dict = {}
             for i in detected_objects.keys():
                 for j in detected_objects[i]:
-                    if j>=0.5:
+                    if j>0.65:
                         if i not in final_dict.keys():
                             final_dict[i] = 1
                         else:
@@ -138,8 +141,10 @@ def image(VIDEO_PATH):
     plt.gca().axes.get_xaxis().set_visible(False)  # Rotate x-axis labels for better readability
     plt.grid(axis='y', linestyle='--', alpha=0.7)
     # Show the plot
-    graph_path = "violation_shaded_plot.png"
+    graph_path = "./static/graph.png"
     plt.savefig(graph_path, bbox_inches='tight', dpi=300)
     plt.close() 
+    
     return video_name
+
 

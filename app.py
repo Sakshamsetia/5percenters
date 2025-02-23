@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, Response
+from flask import Flask, request, render_template, Response, send_file
 from ultralytics import YOLO
 import matplotlib.pyplot as plt
 import cv2
@@ -10,7 +10,7 @@ import main
 app = Flask(__name__)
 
 # Global input & output path variables
-INPUT_PATH = "./video_input/"
+INPUT_FILE = ""
 OUTPUT_VIDEO = ""
 
 # Loading Default Page
@@ -31,28 +31,27 @@ def getChunk(OUTPUT):
             frame_bytes = buffer.tobytes()
             yield(b' --frame/r/n'b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
         
-
-
+# Rendering graph
+@app.route("/graph", methods=["GET", "POST"])
+def graph():
+    # Saving file
+    f = request.files.get("video")
+    if not f:
+        return "<h1> File Not Found </h1>"
+    if not os.path.exists("./video_input/"):
+        os.makedirs("./video_input/")
+    INPUT_FILE = os.path.join("./video_input/", "22.mp4")
+    f.save(INPUT_FILE)
+    
+    # Sending saved file to model
+    OUTPUT_VIDEO = main.image(INPUT_FILE)
+    return render_template("graph.html")
 
 # Function that saves the file given by user, puts it into model, then uses getChunk() to convert into chunks, then sends it to browse
 @app.route("/stream", methods=["GET", "POST"])
 def stream():
-
-    # Saving file
-    f = request.files.get("video")
-    if not f:
-        return "<h1> No file uploaded </h1>"
-    if not os.path.exists(INPUT_PATH):
-        os.makedirs(INPUT_PATH)
-    inputFile = os.path.join(INPUT_PATH, "22.mp4")
-    f.save(inputFile)
-    
-    # Sending saved file to model
-    OUTPUT_VIDEO = main.image(inputFile)
-
+    global OUTPUT_VIDEO
     # Converting it into chunks and then sending it to browser
     ch = getChunk(OUTPUT_VIDEO)
     return Response(ch, mimetype='multipart/x-mixed-replace; boundary=frame', status=200)
-
-
 

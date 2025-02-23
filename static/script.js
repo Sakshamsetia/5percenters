@@ -18,3 +18,7 @@ function Upload(){
 
 
 }
+
+function redirectVideo() {
+    window.location.href="/stream"
+}

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename="style.css")}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" /> 
 </head>
 <body>
@@ -26,15 +26,10 @@
     <div class="main">
         
         <div class="spinner" id="load"></div>
-        <form action="/stream" enctype="multipart/form-data" method="POST">
+        <form action="/graph" enctype="multipart/form-data" method="POST">
             <input type="file" id="video" name="video" onchange="Upload()">
             <label for="video" id="label">Upload</label>
         </form>
-
-        <video autoplay>
-            <source src="http://127.0.0.1:5000/stream" type="video/mp4" id="stream">
-            Placeholder text
-        </video>
     </div>
     <div class="foot"></div>
     <script src="{{ url_for('static', filename='script.js')}}"> </script>
